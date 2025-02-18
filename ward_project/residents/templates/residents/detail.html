@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resident Details</title>
+    <style>
+    body {
+        text-align: center;
+        background-color: lightblue;
+        font-family: Arial, sans-serif;
+    }
+
+    h1 {
+        color: darkblue;
+    }
+
+    p {
+        color: green;
+    }
+    /* Styling the link as a button */
+    a {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 25px; /* Rounded corners */
+            background-color: #007bff; /* Blue background */
+            color: white; /* White text */
+            font-size: 16px;
+            text-decoration: none; /* Remove underline */
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effects */
+        }
+
+        a:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+
+        a:active {
+            transform: translateY(0); /* Reset lift effect on click */
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ resident.name }}</h1>
+    <p><strong>Age:</strong> {{ resident.age }}</p>
+    <p><strong>House No:</strong> {{ resident.house_no }}</p>
+    <p><strong>Occupation:</strong> {{ resident.occupation }}</p>
+    <p><strong>Business:</strong> {{ resident.business }}</p>
+    <p><strong>No of Children:</strong> {{ resident.no_of_children }}</p>
+    <a href="/">Back to Search</a>
+</body>
+</html>
+
