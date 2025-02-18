@@ -1,31 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h2>Welcome, {{ user.username }}!</h2>
+{% extends 'base.html' %}
 
-{% if user.is_staff %}
-    <h3>All Residents</h3>
-{% else %}
-    <h3>Your Residents</h3>
-{% endif %}
+{% block title %}Dashboard - My Website{% endblock %}
 
-<ul>
-    {% for resident in residents %}
-        <li>{{ resident.name }} - {{ resident.house_no }}
-            <a href="{% url 'edit_resident' resident.id %}">Edit</a>
-            {% if user.is_staff %}
-                | <a href="{% url 'delete_resident' resident.id %}">Delete</a>
-            {% endif %}
-        </li>
-    {% endfor %}
-</ul>
+{% block content %}
+<div class="container">
+    <h2 class="my-4">Welcome, {{ user.username }}!</h2>
 
-<a href="{% url 'logout' %}">Logout</a>
+    {% if user.is_staff %}
+        <h3>All Residents</h3>
+    {% else %}
+        <h3>Your Residents</h3>
+    {% endif %}
 
-</body>
-</html>
+    <ul class="list-group">
+        {% for resident in residents %}
+            <li class="list-group-item">
+                {{ resident.name }} - {{ resident.house_no }}
+                <a href="{% url 'edit_resident' resident.id %}" class="btn btn-warning btn-sm ms-2">Edit</a>
+                {% if user.is_staff %}
+                    <a href="{% url 'delete_resident' resident.id %}" class="btn btn-danger btn-sm ms-2">Delete</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- <a href="{% url 'logout' %}" class="btn btn-primary mt-3">Logout</a> -->
+</div>
+{% endblock %}
