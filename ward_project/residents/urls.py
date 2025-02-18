@@ -17,8 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import views
+from django.shortcuts import redirect
+
+def redirect_to_login(request):
+    return redirect('login')  # Change to 'login' if needed
 
 urlpatterns = [
+    path('', redirect_to_login),  # Redirect root URL
     # Admin Route (unchanged)
     path("admin/", admin.site.urls),
 
