@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Website{% endblock %}</title>
+
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            text-align: center;
+            background-color: lightblue;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .navbar:hover {
+            background-color: #444;
+        }
+
+        .navbar .logo a {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar-links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-links ul {
+            display: flex;
+        }
+
+        .navbar-links ul li {
+            margin-right: 20px;
+        }
+
+        .navbar-links ul li:last-child {
+            margin-right: 0;
+        }
+
+        /* Toggle button for small screens */
+        .toggle-button {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 21px;
+            width: 30px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .toggle-button .bar {
+            height: 3px;
+            width: 100%;
+            background-color: #fff;
+        }
+
+        @media screen and (max-width: 768px) {
+            .navbar-links {
+                display: none;
+                width: 100%;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                background-color: #333;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .navbar-links ul {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .navbar-links ul li {
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+                border-bottom: 1px solid #444;
+            }
+
+            .navbar-links ul li:last-child {
+                border-bottom: none;
+            }
+
+            .toggle-button {
+                display: flex;
+            }
+
+            .navbar-links.active {
+                display: flex;
+            }
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        section {
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* styles from default one */
+        h1 {
+            color: darkblue;
+        }
+    
+        p {
+            color: green;
+        }
+
+        /* Styling the text input */
+        input[type="text"], input[type="number"] {
+            padding: 10px 15px;
+            border-radius: 15px;
+            border: 2px solid #ccc;
+            font-size: 16px;
+            width: 100%;
+            max-width: 300px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+        }
+
+        /* Make readonly fields visually distinct */
+        input[readonly] {
+            cursor: not-allowed;
+            background-color: #e9ecef; /* Light gray background */
+            color: #6c757d; /* Dim text color */
+        }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }        
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">
+            <a href="#">My Website</a>
+        </div>
+        <nav class="navbar-links" id="navbarLinks">
+            <ul>
+                <li><a href="{% url 'dashboard' %}">Home</a></li>
+                
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </nav>
+        <button class="toggle-button" id="toggleButton">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+    </header>
+
+    <!-- Content Section -->
+    <div class="container mt-4">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script>
+        // Toggle the navbar links visibility when the toggle button is clicked
+        document.getElementById('toggleButton').addEventListener('click', function() {
+            const navbarLinks = document.getElementById('navbarLinks');
+            navbarLinks.classList.toggle('active');
+        });
+    </script>
+
+</body>
+</html>
