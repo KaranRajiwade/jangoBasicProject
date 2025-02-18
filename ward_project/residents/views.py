@@ -82,7 +82,52 @@ def add_resident(request):
     return render(request, "add_resident.html")
 
 # Edit Resident (Only Owner or Admin)
-@login_required
+@login_required  # Ensure the user is logged in before accessing this view
+def edit_resident(request, resident_id):
+    # Fetch the resident object by its ID. If the resident doesn't exist, return a 404 error.
+    resident = get_object_or_404(Resident, id=resident_id)
+
+    # Check if the logged-in user is the owner of the resident data or an admin.
+    # If not, show an unauthorized message.
+    if request.user != resident.user and not request.user.is_staff:
+        return HttpResponse("You are not authorized to edit this resident.")
+
+    # Check if the form is being submitted (i.e., the request method is POST)
+    if request.method == "POST":
+        # Retrieve the current age of the resident from the database
+        current_age = resident.age
+        
+        # Get the new age from the form input and convert it to an integer
+        new_age = int(request.POST.get("age"))
+
+        # Check if the logged-in user is not an admin and is trying to reduce their age
+        if not request.user.is_staff and new_age < current_age:
+            # If the user is not an admin and attempts to reduce their age, show an error message
+            error_message = "You cannot reduce your age. Only the admin can change it."
+            # Render the error page with the message and resident details
+            return render(request, "edit_resident_error.html", {"error_message": error_message, "resident": resident})
+
+        # If the age change is valid (either no change or an increase), update the resident's details
+        resident.name = request.POST.get("name")  # Update name
+        resident.age = new_age  # Update age to the new value
+        
+        # Update other fields as well
+        resident.house_no = request.POST.get("house_no")  # Update house number
+        resident.occupation = request.POST.get("occupation")  # Update occupation
+        resident.business = request.POST.get("business", "")  # Update business (can be left empty)
+        resident.no_of_children = request.POST.get("no_of_children")  # Update number of children
+
+        # Save the updated resident data to the database
+        resident.save()
+
+        # After saving the changes, redirect the user to the dashboard
+        return redirect("dashboard")
+
+    # If the request method is GET (i.e., the user is just viewing the page), render the edit form
+    return render(request, "edit_resident.html", {"resident": resident})
+
+
+"""@login_required
 def edit_resident(request, resident_id):
     resident = get_object_or_404(Resident, id=resident_id)
 
@@ -101,7 +146,7 @@ def edit_resident(request, resident_id):
         return redirect("dashboard")
 
     return render(request, "edit_resident.html", {"resident": resident})
-
+"""
 # Delete Resident (Only Admin)
 @login_required
 def delete_resident(request, resident_id):
