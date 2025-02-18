@@ -88,8 +88,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ward', #database name which existed in the mysql db
-        'USER': 'root',  # Replace with your MySQL username
-        'PASSWORD': 'password',  # Replace with your MySQL password
+        'USER': '{root}',  # Replace with your MySQL username
+        'PASSWORD': '{password}',  # Replace with your MySQL password
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
