@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Resident</title>
+    <title>Edit Resident</title>
     <style>
         body {
             text-align: center;
@@ -18,66 +18,93 @@
         p {
             color: green;
         }
-         /* Styling the text input */
-         input[type="text"] {
+
+        /* Styling the text input */
+        input[type="text"], input[type="number"] {
             padding: 10px 15px;
-            border-radius: 15px; /* Rounded corners */
-            border: 2px solid #ccc; /* Light gray border */
+            border-radius: 15px;
+            border: 2px solid #ccc;
             font-size: 16px;
-            width: 100%; /* Full width */
-            max-width: 300px; /* Max width */
-            transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for border color and shadow */
+            width: 100%;
+            max-width: 300px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        input[type="text"]:focus {
-            border-color: #007bff; /* Change border color on focus */
-            outline: none; /* Remove the default focus outline */
-            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Add a subtle blue glow */
+        input[type="text"]:focus, input[type="number"]:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
         }
 
-        /* Styling the button */
+        /* Make readonly fields visually distinct */
+        input[readonly] {
+            cursor: not-allowed;
+            background-color: #e9ecef; /* Light gray background */
+            color: #6c757d; /* Dim text color */
+        }
+
         button {
             padding: 10px 20px;
-            border-radius: 25px; /* Rounded corners */
-            border: none; /* Remove border */
-            background-color: #007bff; /* Blue background */
-            color: white; /* White text */
+            border-radius: 25px;
+            border: none;
+            background-color: #007bff;
+            color: white;
             font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effects */
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         button:hover {
-            background-color: #0056b3; /* Darker blue on hover */
-            transform: translateY(-2px); /* Slight lift effect */
+            background-color: #0056b3;
+            transform: translateY(-2px);
         }
 
         button:active {
-            transform: translateY(0); /* Reset lift effect on click */
+            transform: translateY(0);
         }
-        </style>
+    </style>
+    <script>
+        function confirmSave(event) {
+            event.preventDefault(); // Prevent form submission
+            let confirmAction = confirm("Do you want to save the changes?");
+            if (confirmAction) {
+                event.target.form.submit(); // Submit the form if confirmed
+            } else {
+                window.location.href = "{% url 'dashboard' %}"; // Redirect to dashboard if canceled
+            }
+        }
+    </script>
 </head>
 <body>
-    <h1>Add New Resident</h1>
-    <form method="post" action="{% url 'add_resident' %}">
+    <h1>Edit Resident</h1>
+    <form method="post" action="{% url 'edit_resident' resident.id %}">
         {% csrf_token %}
+        
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
+        <input type="text" id="name" name="name" value="{{ resident.name }}" {% if not request.user.is_staff %}readonly{% endif %}>
         <br><br>
         
         <label for="occupation">Occupation:</label>
-        <input type="text" id="occupation" name="occupation" required>
+        <input type="text" id="occupation" name="occupation" value="{{ resident.occupation }}" {% if not request.user.is_staff %}readonly{% endif %}>
         <br><br>
         
         <label for="business">Business:</label>
-        <input type="text" id="business" name="business">
+        <input type="text" id="business" name="business" value="{{ resident.business }}" {% if not request.user.is_staff %}readonly{% endif %}>
         <br><br>
         
         <label for="house_no">House No:</label>
-        <input type="text" id="house_no" name="house_no" required>
+        <input type="text" id="house_no" name="house_no" value="{{ resident.house_no }}" {% if not request.user.is_staff %}readonly{% endif %}>
         <br><br>
         
-        <button type="submit">Add Resident</button>
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" value="{{ resident.age }}">
+        <br><br>
+        
+        <label for="no_of_children">No. of Children:</label>
+        <input type="number" id="no_of_children" name="no_of_children" value="{{ resident.no_of_children }}">
+        <br><br>
+        
+        <button type="submit" onclick="confirmSave(event)">Save Changes</button>
     </form>
 </body>
 </html>
