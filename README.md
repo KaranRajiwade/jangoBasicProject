@@ -11,7 +11,7 @@ A simple Django-based web application for managing residents. This project allow
 ## DataBase
 - create a database using the the wardData.sql
 - change your username and password in settings.py 
-- View resident details
+- to login as a user use default password as password123 and the respective users name
 - Delete residents
 
 ## Prerequisites

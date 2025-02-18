@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -20,7 +21,7 @@ from django.db import models
 # A view fetches data from the database, and a template displays it.
 
 class Resident(models.Model):
-    id = models.AutoField(primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)  # Links Resident to User
     name = models.CharField(max_length=100)
     age = models.IntegerField()
     house_no = models.CharField(max_length=10)
@@ -29,4 +30,7 @@ class Resident(models.Model):
     no_of_children = models.IntegerField(default=0)
 
     class Meta:
-        db_table = 'residents'  # Use the original table
+        db_table = 'residents'  # Ensures it uses the existing MySQL table  # Use the original table
+        
+    def __str__(self):
+        return self.name
