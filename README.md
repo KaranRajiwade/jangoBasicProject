@@ -8,6 +8,12 @@ A simple Django-based web application for managing residents. This project allow
 - View resident details
 - Delete residents
 
+## DataBase
+- create a database using the the wardData.sql
+- change your username and password in settings.py 
+- View resident details
+- Delete residents
+
 ## Prerequisites
 ### 1. Check if Python is Installed
 Run the following command to check if Python is installed:
@@ -59,6 +65,24 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 Follow the prompts to create a username and password.
+
+### To install mysqlclient, run:
+```bash
+pip install mysqlclient
+```
+<!-- ### If you run into issues installing mysqlclient (such as on Windows), you can use PyMySQL as an alternative. To install PyMySQL, run:
+```bash
+pip install pymysql
+```
+
+### Then, you’ll need to add this in your __init__.py to tell Django to use PyMySQL:
+```bash
+import pymysql
+pymysql.install_as_MySQLdb()
+``` -->
+
+
+
 
 ### 6. Run the Development Server
 ```bash
