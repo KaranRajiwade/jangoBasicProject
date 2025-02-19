@@ -1,82 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Resident</title>
-    <style>
-        body {
-            text-align: center;
-            background-color: lightblue;
-            font-family: Arial, sans-serif;
-        }
-    
-        h1 {
-            color: darkblue;
-        }
-    
-        p {
-            color: green;
-        }
 
-        /* Styling the text input */
-        input[type="text"], input[type="number"] {
-            padding: 10px 15px;
-            border-radius: 15px;
-            border: 2px solid #ccc;
-            font-size: 16px;
-            width: 100%;
-            max-width: 300px;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
+{% extends 'base.html' %}
 
-        input[type="text"]:focus, input[type="number"]:focus {
-            border-color: #007bff;
-            outline: none;
-            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
-        }
+{% block title %}Dashboard - My Website{% endblock %}
 
-        /* Make readonly fields visually distinct */
-        input[readonly] {
-            cursor: not-allowed;
-            background-color: #e9ecef; /* Light gray background */
-            color: #6c757d; /* Dim text color */
-        }
-
-        button {
-            padding: 10px 20px;
-            border-radius: 25px;
-            border: none;
-            background-color: #007bff;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-            transform: translateY(-2px);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-    </style>
-    <script>
-        function confirmSave(event) {
-            event.preventDefault(); // Prevent form submission
-            let confirmAction = confirm("Do you want to save the changes?");
-            if (confirmAction) {
-                event.target.form.submit(); // Submit the form if confirmed
-            } else {
-                window.location.href = "{% url 'dashboard' %}"; // Redirect to dashboard if canceled
-            }
-        }
-    </script>
-</head>
-<body>
-    <h1>Edit Resident</h1>
+{% block content %}
+<h1>Edit Resident</h1>
     <form method="post" action="{% url 'edit_resident' resident.id %}">
         {% csrf_token %}
         
@@ -106,5 +34,4 @@
         
         <button type="submit" onclick="confirmSave(event)">Save Changes</button>
     </form>
-</body>
-</html>
+    {% endblock %}

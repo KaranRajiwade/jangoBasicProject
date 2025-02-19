@@ -6,6 +6,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
+
+# To display a default error message for 404 errors in Django
+def custom_404_view(request, exception):
+    return render(request, "404.html", status=404)
+
 # User Signup
 def signup(request):
     if request.method == "POST":

@@ -1,52 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Error - Edit Resident</title>
-    <style>
-        body {
-            text-align: center;
-            background-color: lightblue;
-            font-family: Arial, sans-serif;
-        }
+{% extends 'base.html' %}
 
-        h1 {
-            color: darkblue;
-        }
+{% block title %}Dashboard - My Website{% endblock %}
 
-        .error-message {
-            color: red;
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-
-        button {
-            padding: 10px 20px;
-            border-radius: 25px;
-            border: none;
-            background-color: #007bff;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-            transform: translateY(-2px);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        .buttons {
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
+{% block content %}
     <h1>Error: Invalid Age Change</h1>
     <p class="error-message">{{ error_message }}</p>
     
@@ -60,5 +16,4 @@
             <button>Back to Previous Page</button>
         </a>
     </div>
-</body>
-</html>
+    {% endblock %}

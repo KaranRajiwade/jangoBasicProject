@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>Villa Agency - Real Estate HTML5 Template</title>
+
+    <style>
+        /* Custom CSS to replace Bootstrap classes */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+
+        .col-lg-8, .col-md-8, .col-lg-4, .col-md-4, .col-lg-3, .col-lg-5, .col-lg-12, .col-lg-6, .col-lg-4, .col-md-6 {
+            position: relative;
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        .col-lg-8 { flex: 0 0 66.666667%; max-width: 66.666667%; }
+        .col-md-8 { flex: 0 0 66.666667%; max-width: 66.666667%; }
+        .col-lg-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
+        .col-md-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
+        .col-lg-3 { flex: 0 0 25%; max-width: 25%; }
+        .col-lg-5 { flex: 0 0 41.666667%; max-width: 41.666667%; }
+        .col-lg-12 { flex: 0 0 100%; max-width: 100%; }
+        .col-lg-6 { flex: 0 0 50%; max-width: 50%; }
+        .col-md-6 { flex: 0 0 50%; max-width: 50%; }
+
+        .header-area {
+            padding: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav li {
+            margin-left: 20px;
+        }
+
+        .nav li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .nav li a.active {
+            color: #007bff;
+        }
+
+        .menu-trigger {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .main-banner {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .owl-carousel {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .item {
+            flex: 0 0 100%;
+            position: relative;
+        }
+
+        .header-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #fff;
+        }
+
+        .featured {
+            padding: 60px 0;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .accordion {
+            margin-bottom: 20px;
+        }
+
+        .accordion-item {
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+
+        .accordion-button {
+            width: 100%;
+            padding: 10px;
+            text-align: left;
+            border: none;
+            background-color: #f8f9fa;
+            cursor: pointer;
+        }
+
+        .accordion-body {
+            padding: 10px;
+            display: none;
+        }
+
+        .accordion-body.show {
+            display: block;
+        }
+
+        .info-table ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-table ul li {
+            margin-bottom: 10px;
+        }
+
+        .video-content {
+            padding: 60px 0;
+        }
+
+        .video-frame {
+            position: relative;
+        }
+
+        .video-frame img {
+            width: 100%;
+            height: auto;
+        }
+
+        .video-frame a {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 50px;
+            color: #fff;
+        }
+
+        .fun-facts {
+            padding: 60px 0;
+            background-color: #f8f9fa;
+        }
+
+        .counter {
+            text-align: center;
+        }
+
+        .best-deal {
+            padding: 60px 0;
+        }
+
+        .tabs-content {
+            margin-top: 20px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-tabs li {
+            margin-right: 10px;
+        }
+
+        .nav-tabs li button {
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            background-color: #f8f9fa;
+            cursor: pointer;
+        }
+
+        .nav-tabs li button.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .tab-content {
+            margin-top: 20px;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        .properties {
+            padding: 60px 0;
+        }
+
+        .item {
+            margin-bottom: 30px;
+        }
+
+        .item img {
+            width: 100%;
+            height: auto;
+        }
+
+        .contact {
+            padding: 60px 0;
+        }
+
+        .contact-content {
+            padding: 60px 0;
+        }
+
+        #map {
+            height: 500px;
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        footer {
+            padding: 20px 0;
+            background-color: #f8f9fa;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Your HTML content here -->
+    <!-- The rest of your HTML remains the same, just replace Bootstrap classes with custom classes where necessary -->
+    <!-- For example, replace 'col-lg-8' with 'col-lg-8' (custom class defined in the CSS above) -->
+
+    <!-- Scripts -->
+    <script>
+        // Custom JavaScript to handle accordion and tabs functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Accordion functionality
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const accordionBody = this.nextElementSibling;
+                    accordionBody.classList.toggle('show');
+                });
+            });
+
+            // Tabs functionality
+            const tabButtons = document.querySelectorAll('.nav-tabs li button');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            tabButtons.forEach((button, index) => {
+                button.addEventListener('click', function() {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabPanes.forEach(pane => pane.classList.remove('active'));
+                    this.classList.add('active');
+                    tabPanes[index].classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

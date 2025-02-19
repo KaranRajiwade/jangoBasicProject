@@ -23,9 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-_0qh0^8)(*)uz)&f_+gqvz0)g#n@@3wuu6*mnnb2_sb#3iffoc"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]  # Add your domain/IP if needed
 
-ALLOWED_HOSTS = []
+
+
 
 
 # Application definition
@@ -88,8 +90,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ward', #database name which existed in the mysql db
-        'USER': '{root}',  # Replace with your MySQL username
-        'PASSWORD': '{password}',  # Replace with your MySQL password
+        'USER': 'root',  # Replace with your MySQL username
+        'PASSWORD': 'password',  # Replace with your MySQL password
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
