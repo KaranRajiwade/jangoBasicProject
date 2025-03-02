@@ -6,7 +6,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-
 # To display a default error message for 404 errors in Django
 def custom_404_view(request, exception):
     return render(request, "404.html", status=404)
@@ -31,7 +30,6 @@ def signup(request):
 
     return render(request, "signup.html")
 
-
 # User Login
 def user_login(request):
     if request.method == "POST":
@@ -51,15 +49,25 @@ def user_logout(request):
     logout(request)
     return redirect("login")
 
-# Dashboard (shows only user's data)
+# Dashboard with search functionality
 @login_required
 def dashboard(request):
+    query = request.GET.get("q", "").strip()  # Get search query and remove extra spaces
+
     if request.user.is_staff:  # Admin sees all residents
         residents = Resident.objects.all()
     else:  # Regular users see only their data
         residents = Resident.objects.filter(user=request.user)
-    
-    return render(request, "dashboard.html", {"residents": residents})
+
+    if query:  # If search query exists, filter residents
+        residents = residents.filter(
+            Q(name__icontains=query) |
+            Q(occupation__icontains=query) |
+            Q(business__icontains=query) |
+            Q(house_no__icontains=query)
+        )
+
+    return render(request, "dashboard.html", {"residents": residents, "query": query})
 
 # Add a new resident (only for members)
 @login_required
@@ -87,71 +95,33 @@ def add_resident(request):
     return render(request, "add_resident.html")
 
 # Edit Resident (Only Owner or Admin)
-@login_required  # Ensure the user is logged in before accessing this view
+@login_required
 def edit_resident(request, resident_id):
-    # Fetch the resident object by its ID. If the resident doesn't exist, return a 404 error.
     resident = get_object_or_404(Resident, id=resident_id)
 
-    # Check if the logged-in user is the owner of the resident data or an admin.
-    # If not, show an unauthorized message.
     if request.user != resident.user and not request.user.is_staff:
         return HttpResponse("You are not authorized to edit this resident.")
 
-    # Check if the form is being submitted (i.e., the request method is POST)
     if request.method == "POST":
-        # Retrieve the current age of the resident from the database
         current_age = resident.age
-        
-        # Get the new age from the form input and convert it to an integer
         new_age = int(request.POST.get("age"))
 
-        # Check if the logged-in user is not an admin and is trying to reduce their age
         if not request.user.is_staff and new_age < current_age:
-            # If the user is not an admin and attempts to reduce their age, show an error message
             error_message = "You cannot reduce your age. Only the admin can change it."
-            # Render the error page with the message and resident details
             return render(request, "edit_resident_error.html", {"error_message": error_message, "resident": resident})
 
-        # If the age change is valid (either no change or an increase), update the resident's details
-        resident.name = request.POST.get("name")  # Update name
-        resident.age = new_age  # Update age to the new value
-        
-        # Update other fields as well
-        resident.house_no = request.POST.get("house_no")  # Update house number
-        resident.occupation = request.POST.get("occupation")  # Update occupation
-        resident.business = request.POST.get("business", "")  # Update business (can be left empty)
-        resident.no_of_children = request.POST.get("no_of_children")  # Update number of children
-
-        # Save the updated resident data to the database
-        resident.save()
-
-        # After saving the changes, redirect the user to the dashboard
-        return redirect("dashboard")
-
-    # If the request method is GET (i.e., the user is just viewing the page), render the edit form
-    return render(request, "edit_resident.html", {"resident": resident})
-
-
-"""@login_required
-def edit_resident(request, resident_id):
-    resident = get_object_or_404(Resident, id=resident_id)
-
-    if request.user != resident.user and not request.user.is_staff:
-        return HttpResponse("You are not authorized to edit this resident.")
-
-    if request.method == "POST":
         resident.name = request.POST.get("name")
-        resident.age = request.POST.get("age")
+        resident.age = new_age
         resident.house_no = request.POST.get("house_no")
         resident.occupation = request.POST.get("occupation")
         resident.business = request.POST.get("business", "")
         resident.no_of_children = request.POST.get("no_of_children")
-        resident.save()
 
+        resident.save()
         return redirect("dashboard")
 
     return render(request, "edit_resident.html", {"resident": resident})
-"""
+
 # Delete Resident (Only Admin)
 @login_required
 def delete_resident(request, resident_id):
@@ -162,24 +132,6 @@ def delete_resident(request, resident_id):
 
     resident.delete()
     return redirect("dashboard")
-
-@login_required
-def search(request):
-    query = request.GET.get("q", "")
-    
-    if request.user.is_staff:
-        residents = Resident.objects.all()  # Admin sees all residents
-    else:
-        residents = Resident.objects.filter(user=request.user)  # Regular user sees only their data
-    
-    if query:
-        residents = residents.filter(
-            Q(name__icontains=query) | Q(house_no__icontains=query) |
-            Q(occupation__icontains=query) | Q(business__icontains=query)
-        )
-
-    return render(request, "search.html", {"residents": residents, "query": query})
-
 
 """ ~~~~~~~~~~~~~~~~~this is old code~~~~~~~~~~~~~~~~~
 
